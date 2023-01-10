@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TeamController!
+{% endblock %}
+
+{% block body %}
+	<h1>Les matchs</h1>
+	{% for game in games %}
+		<h2>{{ game.date | date | format_datetime('full', 'short', locale='fr') }}</h2>
+		{% for team in game.teams %}
+			{% if loop.first %}
+				{{ team.name }}
+				VS
+			{% else %}
+				{{ team.name }}
+			{% endif %}
+
+		{% endfor %}
+		{% if game.winner %}
+			<p>Vainqueur:
+				{{ game.winner.name }}</p>
+		{% endif %}
+		<p>
+			<a href="{{ path('show_game', {id: game.id}) }}">Consulter le détail du match</a>
+		</p>
+	{% endfor %}
+{% endblock %}
